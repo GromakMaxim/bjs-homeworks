@@ -25,14 +25,14 @@ function sum(...args) {
     return args.reduce((a, b) => (a + b));
 }
 
-let compareArrays = (arr1, arr2) => arr1.join(``) === arr2.join(``);
+let compareArrays = (arr1, arr2) => arr1.every((currentValue, index) => currentValue === arr2[index]) && arr1.length === arr2.length;
 
 function memorize(fn, limit) {
     let memory = [];
     return (...args) => {
         const tempObj = {};
         let foundInMemory = memory.find(item => compareArrays(item.args, [...args]));
-        if (typeof foundInMemory != "undefined") return foundInMemory.result;
+        if (foundInMemory) return foundInMemory.result;
 
         tempObj.args = [...args];
         tempObj.result = fn(...args);
